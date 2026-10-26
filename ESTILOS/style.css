@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap');
+
+:root {
+  --stark-base: #0a0c10;
+  --stark-surface: #121620;
+  --stark-border: #1e2638;
+  --stark-accent-orange: #ff5500;
+  --stark-accent-cyan: #00f0ff;
+  --stark-glow-orange: rgba(255, 85, 0, 0.35);
+  --stark-glow-cyan: rgba(0, 240, 255, 0.25);
+  --stark-text: #e6edf3;
+  --stark-text-dim: #7d8590;
+}
+
+body {
+  background-color: var(--stark-base);
+  color: var(--stark-text);
+  font-family: 'Rajdhani', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-image: 
+    radial-gradient(ellipse at 50% -20%, rgba(255, 85, 0, 0.15), transparent 70%),
+    linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+  background-size: 100% 100%, 30px 30px, 30px 30px;
+}
+
+.stark-brand-header {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 900;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--stark-text);
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.stark-brand-header::before {
+  content: '';
+  width: 14px;
+  height: 14px;
+  background: var(--stark-accent-orange);
+  box-shadow: 0 0 12px var(--stark-accent-orange);
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  animation: starkCorePulse 2.5s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+.stark-panel {
+  background: var(--stark-surface);
+  border: 1px solid var(--stark-border);
+  border-left: 3px solid var(--stark-accent-orange);
+  border-radius: 4px;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  transition: all 0.25s ease;
+}
+
+.stark-panel::after {
+  content: 'STARK-SYS // SECURE';
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 2px;
+  color: var(--stark-text-dim);
+  opacity: 0.5;
+}
+
+.stark-panel:hover {
+  border-color: var(--stark-accent-orange);
+  box-shadow: 0 0 20px var(--stark-glow-orange),
+              inset 0 0 15px rgba(255, 85, 0, 0.05);
+  transform: translateY(-2px);
+}
+
+.stark-btn {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--stark-text
