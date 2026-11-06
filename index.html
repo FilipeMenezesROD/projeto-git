@@ -1,49 +1,541 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt" class="dark">
 <head>
     <meta charset="UTF-8">
-    <title>Stark Industries</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apresentação Profissional - Filipe Menezes</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        stark: {
+                            bg: '#0a0d14',
+                            card: '#131b2e',
+                            cardHover: '#1a2642',
+                            cyan: '#00f0ff',
+                            gold: '#d4af37',
+                            goldLight: '#f3e5ab',
+                            border: '#1e293b',
+                            accent: '#3b82f6'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0d14;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+        .slide {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+            transform: translateY(20px);
+        }
+        .slide.active {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .glow-cyan {
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.15);
+        }
+        .glow-gold {
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.15);
+        }
+        .glass-panel {
+            background: rgba(19, 27, 46, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0d14;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3b82f6;
+        }
+    </style>
 </head>
-<body>
-    <h1>Stark Industries - Main Panel</h1>
+<body class="min-h-screen flex flex-col justify-between selection:bg-stark-cyan selection:text-black">
+
+    <!-- Top Navigation Bar / HUD Header -->
+    <header class="w-full glass-panel border-b border-stark-border px-6 py-4 flex items-center justify-between sticky top-0 z-50">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-stark-cyan flex items-center justify-center glow-cyan">
+                <i class="fa-solid fa-shield-halved text-white text-lg"></i>
+            </div>
+            <div>
+                <h1 class="font-bold text-lg tracking-wide text-white flex items-center gap-2">
+                    FILIPE MENEZES <span class="text-xs px-2 py-0.5 rounded-full bg-stark-cyan/10 text-stark-cyan border border-stark-cyan/30">ARK-OS v4.2</span>
+                </h1>
+                <p class="text-xs text-slate-400">Systems, Cybersecurity & Tech Portfolio</p>
+            </div>
+        </div>
+
+        <!-- Slide Indicators / Quick Jump -->
+        <div class="hidden md:flex items-center space-x-2 bg-slate-900/60 p-1.5 rounded-xl border border-slate-800">
+            <button onclick="goToSlide(0)" class="nav-dot px-3 py-1 rounded-lg text-xs font-medium transition-all text-slate-400 hover:text-white" data-index="0">01. Capa</button>
+            <button onclick="goToSlide(1)" class="nav-dot px-3 py-1 rounded-lg text-xs font-medium transition-all text-slate-400 hover:text-white" data-index="1">02. Perfil & Tech</button>
+            <button onclick="goToSlide(2)" class="nav-dot px-3 py-1 rounded-lg text-xs font-medium transition-all text-slate-400 hover:text-white" data-index="2">03. Projetos</button>
+            <button onclick="goToSlide(3)" class="nav-dot px-3 py-1 rounded-lg text-xs font-medium transition-all text-slate-400 hover:text-white" data-index="3">04. Estilo de Vida</button>
+            <button onclick="goToSlide(4)" class="nav-dot px-3 py-1 rounded-lg text-xs font-medium transition-all text-slate-400 hover:text-white" data-index="4">05. Dashboard</button>
+        </div>
+
+        <div class="flex items-center space-x-3">
+            <a href="mailto:filipemr@hotmail.com" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600/20 text-stark-cyan border border-stark-cyan/30 hover:bg-stark-cyan/20 transition-all text-xs font-semibold">
+                <i class="fa-solid fa-envelope"></i> Contactar
+            </a>
+            <div class="text-xs text-slate-400 font-mono px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800">
+                <span id="current-slide-num">1</span> / 5
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Presentation Container -->
+    <main class="flex-grow flex items-center justify-center p-4 sm:p-8 max-w-7xl mx-auto w-full relative">
+
+        <!-- SLIDE 1: CAPA / INTRODUÇÃO -->
+        <section id="slide-0" class="slide active w-full flex-col justify-center items-center py-12">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 w-full items-center">
+                <div class="lg:col-span-7 space-y-6 text-left">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-stark-gold/10 text-stark-gold border border-stark-gold/30 text-xs font-semibold tracking-wider uppercase">
+                        <i class="fa-solid fa-star"></i> Protocolo Executivo & Tech Innovation
+                    </div>
+                    <h2 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight">
+                        Filipe Menezes <br>
+                        <span class="bg-gradient-to-r from-stark-cyan via-blue-500 to-indigo-400 bg-clip-text text-transparent">Antony Stark Edition</span>
+                    </h2>
+                    <p class="text-slate-300 text-base sm:text-lg max-w-2xl leading-relaxed">
+                        Especialista em Sistemas de Informação, Redes e Cibersegurança baseado em <span class="text-white font-semibold">São João da Madeira, Portugal</span>. Focado em infraestruturas seguras, arquiteturas de redes avançadas e desenvolvimento web de alta performance.
+                    </p>
+                    <div class="flex flex-wrap gap-4 pt-2">
+                        <button onclick="nextSlide()" class="px-6 py-3 rounded-xl bg-gradient-to-r from-stark-cyan to-blue-600 text-black font-bold text-sm flex items-center gap-2 hover:opacity-90 transition-all shadow-lg glow-cyan">
+                            <span>Iniciar Apresentação</span> <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                        <a href="tel:997874498" class="px-6 py-3 rounded-xl glass-panel text-white font-semibold text-sm flex items-center gap-2 hover:bg-slate-800 transition-all border border-slate-700">
+                            <i class="fa-solid fa-phone text-stark-cyan"></i> <span>997 874 498</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5 flex justify-center">
+                    <div class="relative w-full max-w-md aspect-square rounded-3xl glass-panel p-6 border border-stark-cyan/30 glow-cyan flex flex-col justify-between overflow-hidden group">
+                        <!-- Decorative Arc Reactor Background Glow -->
+                        <div class="absolute -right-20 -bottom-20 w-72 h-72 rounded-full bg-stark-cyan/10 blur-3xl pointer-events-none"></div>
+                        <div class="absolute -left-20 -top-20 w-72 h-72 rounded-full bg-blue-600/10 blur-3xl pointer-events-none"></div>
+
+                        <div class="flex justify-between items-center z-10">
+                            <span class="text-xs font-mono text-stark-cyan tracking-widest">[STARK INDUSTRIES SECURE]</span>
+                            <i class="fa-solid fa-microchip text-stark-cyan text-xl"></i>
+                        </div>
+
+                        <div class="my-auto text-center z-10 space-y-4">
+                            <div class="w-24 h-24 mx-auto rounded-2xl bg-gradient-to-tr from-slate-900 to-slate-800 border-2 border-stark-cyan/50 flex items-center justify-center shadow-2xl group-hover:scale-105 transition-transform">
+                                <i class="fa-solid fa-user-shield text-4xl text-stark-cyan"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-white">Filipe Menezes</h3>
+                                <p class="text-xs text-stark-cyan mt-1">Systems & Cybersecurity Analyst</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-2 pt-4 border-t border-slate-800/80 z-10 text-xs">
+                            <div class="bg-slate-900/50 p-2.5 rounded-xl border border-slate-800">
+                                <span class="text-slate-400 block">Localização</span>
+                                <span class="text-white font-semibold">São João da Madeira</span>
+                            </div>
+                            <div class="bg-slate-900/50 p-2.5 rounded-xl border border-slate-800">
+                                <span class="text-slate-400 block">E-mail</span>
+                                <span class="text-white font-semibold truncate block">filipemr@hotmail.com</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 2: PERFIL PROFISSIONAL & ACADÉMICO -->
+        <section id="slide-1" class="slide w-full flex-col justify-center py-8">
+            <div class="mb-6">
+                <span class="text-xs font-mono text-stark-cyan tracking-widest">[MÓDULO ACADÉMICO E TÉCNICO]</span>
+                <h3 class="text-2xl sm:text-3xl font-bold text-white mt-1">Perfil Profissional & Académico</h3>
+                <p class="text-slate-400 text-sm">Formação sólida em sistemas de informação, redes avançadas e cibersegurança.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Card 1: IEFP & Sistemas -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 flex flex-col justify-between hover:border-stark-cyan/40 transition-all">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-blue-600/10 text-blue-400 flex items-center justify-center mb-4 border border-blue-500/20">
+                            <i class="fa-solid fa-graduation-cap text-xl"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-white">IEFP & Sistemas</h4>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                            Técnico de Análise e Gestão de Sistemas de Informação. Domínio em gestão de bases de dados, suporte estruturado, arquitetura de sistemas e metodologias analíticas.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-800 flex flex-wrap gap-1.5">
+                        <span class="text-[10px] px-2 py-1 rounded bg-slate-800 text-slate-300">Análise de Sistemas</span>
+                        <span class="text-[10px] px-2 py-1 rounded bg-slate-800 text-slate-300">Gestão de TI</span>
+                        <span class="text-[10px] px-2 py-1 rounded bg-slate-800 text-slate-300">Bases de Dados</span>
+                    </div>
+                </div>
+
+                <!-- Card 2: Cibersegurança U-Porto -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 flex flex-col justify-between hover:border-stark-cyan/40 transition-all">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-cyan-600/10 text-stark-cyan flex items-center justify-center mb-4 border border-stark-cyan/20">
+                            <i class="fa-solid fa-lock text-xl"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-white">Cibersegurança (U-Porto)</h4>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                            Estudos e especialização em cibersegurança pela Universidade do Porto. Foco em proteção de infraestruturas críticas, prevenção de ameaças e auditoria de segurança.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-800 flex flex-wrap gap-1.5">
+                        <span class="text-[10px] px-2 py-1 rounded bg-slate-800 text-stark-cyan">U-Porto</span>
+                        <span class="text-[10px] px-2 py-1 rounded bg-slate-800 text-slate-300">Segurança Defensiva</span>
+                        <span class="text-[10px] px-2 py-1 rounded bg-slate-800 text-slate-300">Auditoria</span>
+                    </div>
+                </div>
+
+                <!-- Card 3: Redes & Tecnologias -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 flex flex-col justify-between hover:border-stark-cyan/40 transition-all">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-purple-600/15 text-purple-400 flex items-center justify-center mb-4 border border-purple-500/20">
+                            <i class="fa-solid fa-network-wired text-xl"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-white">Redes & Infraestrutura</h4>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                            Experiência prática com simulação e hardware de redes: Cisco Packet Tracer, ASA 5506-X, configuração de VLANs, VoIP e protocolos de encaminhamento.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-800 flex flex-wrap gap-1.5">
+                        <span class="text-[10px] px-2 py-1 rounded bg-slate-800 text-slate-300">Cisco Packet Tracer</span>
+                        <span class="text-[10px] px-2 py-1 rounded bg-slate-800 text-slate-300">ASA 5506-X</span>
+                        <span class="text-[10px] px-2 py-1 rounded bg-slate-800 text-slate-300">VLANs & VoIP</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Skills Row -->
+            <div class="mt-6 glass-panel p-4 rounded-2xl border border-slate-800 flex flex-wrap items-center justify-between gap-4">
+                <span class="text-xs font-semibold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+                    <i class="fa-solid fa-code text-stark-cyan"></i> Stack de Desenvolvimento:
+                </span>
+                <div class="flex flex-wrap gap-3 text-xs">
+                    <span class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 flex items-center gap-1.5"><i class="fa-brands fa-html5 text-orange-500"></i> HTML5 / CSS3</span>
+                    <span class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 flex items-center gap-1.5"><i class="fa-brands fa-js text-yellow-400"></i> JavaScript</span>
+                    <span class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 flex items-center gap-1.5"><i class="fa-brands fa-git-alt text-red-500"></i> Git & GitHub</span>
+                    <span class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 flex items-center gap-1.5"><i class="fa-solid fa-terminal text-blue-400"></i> VS Code</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 3: PROJETOS & EMPREENDIMENTOS -->
+        <section id="slide-2" class="slide w-full flex-col justify-center py-8">
+            <div class="mb-6">
+                <span class="text-xs font-mono text-stark-cyan tracking-widest">[PORTFÓLIO DE PROJETOS & ECOSSISTEMA]</span>
+                <h3 class="text-2xl sm:text-3xl font-bold text-white mt-1">Projetos & Empreendimentos</h3>
+                <p class="text-slate-400 text-sm">De aplicações web reais em São João da Madeira ao universo corporativo Stark / GTA V.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Real Project: Studio Léia Menezes -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 flex flex-col justify-between hover:border-stark-cyan/40 transition-all">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-full bg-pink-500/10 text-pink-400 text-xs font-semibold border border-pink-500/20">Projeto Real</span>
+                            <i class="fa-solid fa-scissors text-pink-400 text-lg"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-white">Studio Léia Menezes</h4>
+                        <p class="text-xs text-stark-cyan font-mono mt-1">@leiamenezes_hair_stylist • São João da Madeira</p>
+                        <p class="text-xs text-slate-300 mt-3 leading-relaxed">
+                            Website moderno desenvolvido à medida para destacar serviços profissionais de hairstyling em São João da Madeira. Design elegante, foco em conversão, agendamento facilitado e experiência mobile otimizada.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-800 flex items-center justify-between">
+                        <div class="flex gap-1.5">
+                            <span class="text-[10px] px-2 py-1 rounded bg-slate-900 text-slate-300">Web Design</span>
+                            <span class="text-[10px] px-2 py-1 rounded bg-slate-900 text-slate-300">UI/UX</span>
+                        </div>
+                        <span class="text-xs text-slate-400 italic">SJM, Portugal</span>
+                    </div>
+                </div>
+
+                <!-- Corporate Universe: Stark / GTA V -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 flex flex-col justify-between hover:border-stark-gold/40 transition-all">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-full bg-stark-gold/10 text-stark-gold text-xs font-semibold border border-stark-gold/20">Ecossistema Executivo</span>
+                            <i class="fa-solid fa-building text-stark-gold text-lg"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-white">Stark Industries & Shelby Co.</h4>
+                        <p class="text-xs text-stark-gold font-mono mt-1">Maze Bank Tower • Togniva Hills</p>
+                        <p class="text-xs text-slate-300 mt-3 leading-relaxed">
+                            Simulação de alto nível e gestão corporativa inspirada no universo de Antony Stark e Grand Theft Auto V. Operações baseadas na Maze Bank Tower e expansões estratégicas em Togniva Hills com foco em inovação e controlo total.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-800 flex items-center justify-between">
+                        <div class="flex gap-1.5">
+                            <span class="text-[10px] px-2 py-1 rounded bg-slate-900 text-slate-300">GTA V Universe</span>
+                            <span class="text-[10px] px-2 py-1 rounded bg-slate-900 text-slate-300">Executive Ops</span>
+                        </div>
+                        <span class="text-xs text-stark-gold font-mono">Los Santos / SJM</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 4: ESTILO DE VIDA & HOBBIES -->
+        <section id="slide-3" class="slide w-full flex-col justify-center py-8">
+            <div class="mb-6">
+                <span class="text-xs font-mono text-stark-cyan tracking-widest">[ESTILO DE VIDA & PERFORMANCE]</span>
+                <h3 class="text-2xl sm:text-3xl font-bold text-white mt-1">Estilo de Vida & Hobbies</h3>
+                <p class="text-slate-400 text-sm">Disciplina física, simulação imersiva e velocidade na veia.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Gymrat -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 flex flex-col justify-between hover:border-stark-cyan/40 transition-all">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-orange-600/15 text-orange-400 flex items-center justify-center mb-4 border border-orange-500/20">
+                            <i class="fa-solid fa-dumbbell text-xl"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-white">Gymrat & Disciplina</h4>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                            Sequência sólida de treinos físicos consistentes. Foco na superação de limites, disciplina rigorosa e saúde em sintonia com a alta performance profissional.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-800">
+                        <span class="text-[10px] px-2 py-1 rounded bg-slate-900 text-orange-400 font-semibold">Consistência Diária</span>
+                    </div>
+                </div>
+
+                <!-- Simulação & Gaming -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 flex flex-col justify-between hover:border-stark-cyan/40 transition-all">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-blue-600/15 text-blue-400 flex items-center justify-center mb-4 border border-blue-500/20">
+                            <i class="fa-solid fa-gamepad text-xl"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-white">Simulação & Jogos</h4>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                            Mergulho profundo em universos complexos: <span class="text-white font-medium">Grand Theft Auto V</span>, <span class="text-white font-medium">Red Dead Redemption 2</span> e <span class="text-white font-medium">American Truck Simulator</span>.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-800 flex flex-wrap gap-1.5">
+                        <span class="text-[10px] px-2 py-1 rounded bg-slate-900 text-slate-300">GTA V</span>
+                        <span class="text-[10px] px-2 py-1 rounded bg-slate-900 text-slate-300">RDR2</span>
+                        <span class="text-[10px] px-2 py-1 rounded bg-slate-900 text-slate-300">ATS</span>
+                    </div>
+                </div>
+
+                <!-- Fórmula 1 -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 flex flex-col justify-between hover:border-stark-cyan/40 transition-all">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-red-600/15 text-red-500 flex items-center justify-center mb-4 border border-red-500/20">
+                            <i class="fa-solid fa-flag-checkered text-xl"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-white">Fórmula 1 & Velocidade</h4>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                            Acompanhamento atento da categoria máxima do automobilismo mundial. Estratégia, engenharia de ponta e precisão milimétrica em pista.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-800">
+                        <span class="text-[10px] px-2 py-1 rounded bg-slate-900 text-red-400 font-semibold">Motorsport Enthusiast</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 5: PAINEL DE CONTROLO / CONCLUSÃO -->
+        <section id="slide-4" class="slide w-full flex-col justify-center py-8">
+            <div class="mb-6">
+                <span class="text-xs font-mono text-stark-cyan tracking-widest">[PAINEL DE CONTROLO EXECUTIVO]</span>
+                <h3 class="text-2xl sm:text-3xl font-bold text-white mt-1">Resumo & Conexões</h3>
+                <p class="text-slate-400 text-sm">Estatísticas do sistema e canais diretos de comunicação com Filipe Menezes.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                <!-- Stats Box -->
+                <div class="lg:col-span-6 glass-panel p-6 rounded-2xl border border-slate-800 space-y-6">
+                    <h4 class="text-sm font-semibold text-stark-cyan uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-chart-line"></i> Estatísticas de Performance
+                    </h4>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+                            <span class="text-2xl font-extrabold text-white">100%</span>
+                            <span class="text-xs text-slate-400 block mt-1">Compromisso & Foco</span>
+                        </div>
+                        <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+                            <span class="text-2xl font-extrabold text-stark-cyan">U-Porto</span>
+                            <span class="text-xs text-slate-400 block mt-1">Cibersegurança</span>
+                        </div>
+                        <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+                            <span class="text-2xl font-extrabold text-pink-400">Studio Léia</span>
+                            <span class="text-xs text-slate-400 block mt-1">Web Development</span>
+                        </div>
+                        <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+                            <span class="text-2xl font-extrabold text-stigold text-stark-gold">Stark/SJM</span>
+                            <span class="text-xs text-slate-400 block mt-1">Inovação & Sistemas</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Box -->
+                <div class="lg:col-span-6 glass-panel p-6 rounded-2xl border border-stark-cyan/30 glow-cyan space-y-6">
+                    <h4 class="text-sm font-semibold text-white uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-paper-plane text-stark-cyan"></i> Canais Oficiais de Comunicação
+                    </h4>
+                    
+                    <div class="space-y-3">
+                        <a href="mailto:filipemr@hotmail.com" class="flex items-center justify-between p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-stark-cyan/50 transition-all group">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-blue-600/20 text-stark-cyan flex items-center justify-center border border-stark-cyan/30">
+                                    <i class="fa-solid fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <span class="text-xs text-slate-400 block">Correio Eletrónico</span>
+                                    <span class="text-sm font-bold text-white group-hover:text-stark-cyan transition-colors">filipemr@hotmail.com</span>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-arrow-right text-slate-500 group-hover:text-stark-cyan transition-colors"></i>
+                        </a>
+
+                        <a href="tel:997874498" class="flex items-center justify-between p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-stark-cyan/50 transition-all group">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-emerald-600/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30">
+                                    <i class="fa-solid fa-phone"></i>
+                                </div>
+                                <div>
+                                    <span class="text-xs text-slate-400 block">Telemóvel Direto</span>
+                                    <span class="text-sm font-bold text-white group-hover:text-emerald-400 transition-colors">997 874 498</span>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-arrow-right text-slate-500 group-hover:text-emerald-400 transition-colors"></i>
+                        </a>
+                    </div>
+
+                    <div class="pt-2 flex justify-center">
+                        <button onclick="goToSlide(0)" class="text-xs text-stark-cyan hover:underline flex items-center gap-1.5 font-medium">
+                            <i class="fa-solid fa-rotate-right"></i> Reiniciar Apresentação
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Bottom HUD Footer / Navigation Controls -->
+    <footer class="w-full glass-panel border-t border-stark-border px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="text-xs text-slate-400 text-center sm:text-left">
+            <span>© 2026 Filipe Menezes. Todos os direitos reservados.</span> • <span class="text-stark-cyan font-mono">São João da Madeira</span>
+        </div>
+
+        <div class="flex items-center space-x-3">
+            <button onclick="prevSlide()" class="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:border-stark-cyan/40 transition-all text-xs font-semibold flex items-center gap-2">
+                <i class="fa-solid fa-chevron-left"></i> Anterior
+            </button>
+            <div class="text-xs font-mono text-stark-cyan px-3 py-1 bg-slate-900/80 rounded-lg border border-slate-800">
+                Use as setas ← → do teclado
+            </div>
+            <button onclick="nextSlide()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-stark-cyan to-blue-600 text-black font-bold hover:opacity-90 transition-all text-xs flex items-center gap-2 glow-cyan">
+                Seguinte <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+    </footer>
+
+    <!-- JavaScript Presentation Controller -->
+    <script>
+        let currentSlide = 0;
+        const totalSlides = 5;
+
+        function updateSlideDisplay() {
+            // Hide all slides
+            for (let i = 0; i < totalSlides; i++) {
+                const slide = document.getElementById(`slide-${i}`);
+                if (slide) {
+                    slide.classList.remove('active');
+                }
+            }
+
+            // Show active slide
+            const activeSlide = document.getElementById(`slide-${currentSlide}`);
+            if (activeSlide) {
+                activeSlide.classList.add('active');
+            }
+
+            // Update slide counter
+            document.getElementById('current-slide-num').innerText = currentSlide + 1;
+
+            // Update navigation dots style
+            document.querySelectorAll('.nav-dot').forEach((dot, index) => {
+                if (index === currentSlide) {
+                    dot.classList.add('bg-stark-cyan/20', 'text-stark-cyan', 'border', 'border-stark-cyan/40');
+                    dot.classList.remove('text-slate-400');
+                } else {
+                    dot.classList.remove('bg-stark-cyan/20', 'text-stark-cyan', 'border', 'border-stark-cyan/40');
+                    dot.classList.add('text-slate-400');
+                }
+            });
+
+            // Scroll top smoothly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlideDisplay();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateSlideDisplay();
+        }
+
+        function goToSlide(index) {
+            if (index >= 0 && index < totalSlides) {
+                currentSlide = index;
+                updateSlideDisplay();
+            }
+        }
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                prevSlide();
+            }
+        });
+
+        // Initialize on load
+        window.onload = function() {
+            updateSlideDisplay();
+        };
+    </script>
 </body>
 </html>
-
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Stark Industries</title>
-    </head>
-    <body>
-        <h1>Stark Industries - Main Panel</h1>
-
-        <section>
-            <h2>Integrated Units</h2>
-            <p>Shelby Company Ltd. & Zion Consultancy</p>
-        </section>
-    </body>
-</html>
-
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Stark Industries</title>
-    </head>
-    <body>
-        <h1>Stark Industries - Main Panel</h1>
-
-        <section>
-            <h2>Integrated Units</h2>
-            <p>Shelby Company Ltd. & Zion Consultancy</p>
-        </section>
-
-        <section>
-            <h2>Maritime Logistics</h2>
-            <p>Novster Transports - Fleet Monitoring</p>
-        </section>
-    </body>
-</html> 
-
-
